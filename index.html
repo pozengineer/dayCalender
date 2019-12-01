@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-us" class="h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>workDayScheduler</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"/>
+
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/style01.css">
+        
+    </head>
+
+    <body class="d-flex flex-column h-100">
+        <div class="wrapper">
+            <header>
+                <div class="jumbotron ">
+                    <!-- row01 -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="display-3">Work Day Scheduler</h1>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="countDown" id="minutes"></div>
+                            <div class="countDown" id="seconds"></div>
+                        </div>
+                    </div>
+                    <!-- row02 -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="lead">A simple calender app for scheduling your work day</p>
+                        </div>
+                    </div>
+                    <!-- row03 -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p id="currentDay" class="lead"></p>
+                        </div>
+                    </div>
+                </div>
+
+            <section id="mainContent" class="flex-shrink-0">
+                <div class="container">
+                    <!-- row04 -->
+                    <!-- <div class="row">
+                        <div class="col-md-2">
+                            <ul class="listScores"></ul>
+                            <p class="timeId">16:00</p>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea class="inputText" rows="3" cols="50" name="comment" form="usrform" id="16:00" onfocus="this.value=''">Enter text here...</textarea>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="saveIcon">Save</p>
+                        </div>
+                    </div> -->
+                    <!-- row05 -->
+                    <!-- <div class="row" id="controls">
+                        <div class="col-md-12">
+                            <button class="start-btn btn" id="startBtn">Start Quiz</button>
+                            <input type="text" class="singleLine" onfocus="this.value=''" name="Name" placeholder="Text here...">
+                        </div> 
+                    </div> -->
+                    
+                </div>
+
+            </section>
+            <div class="push"></div>
+        </div>
+        <footer class="footer mt-auto py-3">
+            <span class="text-muted">Copyright &#169; 2019</span>
+        </footer>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/javaScript/javaScript01.js"></script>
+        <script type="text/javascript" src="assets/javaScript/moment.min.js"></script>
+
+    </body>
+
+</html>

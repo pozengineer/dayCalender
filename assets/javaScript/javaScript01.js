@@ -3,6 +3,7 @@ var minutesDisplayEl = document.querySelector("#minutes");
 var secondsDisplayEl = document.querySelector("#seconds");
 var contentContainerEl = document.querySelector(".container");
 var clearBtnEl = document.querySelector('#clearBtn');
+var currentDayEl = document.querySelector("#currentDay")
 
 var totalSeconds = 0;
 var secondsElapsed = 0;
@@ -11,10 +12,45 @@ var score = 0;
 var shuffledQues = "";
 var currentQuesIndex = 0;
 
-var timeIdArray = ["16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"];
+// Current Date and Time
+var m = moment();
+console.log(m);
 
-renderTime();
+// Create from ISO 8601 String
+m = moment("2019-05-19T23:10:00.000+05:00");
+
+// Using a format
+m = moment("14/06/2019 4:50PM", "DD/MM/YYYY h:mmA");
+
+// Create using milliseconds since epoch (1st Jan 1970)
+m = moment(600000);
+
+// Create using seconds since epoch (1st Jan 1970)
+m = moment.unix(7200);
+
+// Create a moment object in UTC mode
+m = moment.utc("2019-05-19T23:10:00.000+05:00");
+
+m = moment();
+
+var timeIdArray = [m.format('16:00'), m.format('17:00'), m.format('18:00'), m.format('19:00'), m.format('20:00'), m.format('21:00'), m.format('22:00'), m.format('23:00'), m.format('24:00')];
+
+console.log(`toString() => ${m.toString()}`);
+console.log(`toISOString() => ${m.toISOString()}`);
+
+$('#mintes').text(1.3);
+
+function update() {
+  $('#minutes').html(moment().format('hh:mm:ss'));
+}
+
+setInterval(update, 1000);
+
+currentDayEl.textContent = m.format("dddd DD MMMM YYYY");
+
+//renderTime();
 displayScheduler();
+displayTimeEl();
 
 contentContainerEl.addEventListener("click", inputData);
 contentContainerEl.addEventListener("click", saveToLocal);
@@ -67,6 +103,14 @@ function displayScheduler() {
     rowEl.appendChild(clearEl);
     clearEl.appendChild(clearBtnEl);
     clearBtnEl.addEventListener("click", clearList);
+
+}
+
+function displayTimeEl(){
+    var timeIdEl = document.querySelectorAll(".timeId");
+    var timeText = timeIdEl[0].textContent;
+    console.log(timeText);
+    console.log(m.hour())
 }
 
 function inputData(event) {

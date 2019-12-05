@@ -152,7 +152,7 @@ $(document).ready(function() {
             console.log("Current text input is: " + userInputUppercase);
             localStorage.setItem(indexSelect - 15, userInputUppercase);
         }
-        // displayReminders();
+        displayReminders();
     }
 
     function displayReminders() {

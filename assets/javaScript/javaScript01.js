@@ -11,10 +11,12 @@ var interval;
 var score = 0;
 var shuffledQues = "";
 var currentQuesIndex = 0;
+var currentHour = 0;
 
 // Current Date and Time
 var m = moment();
 console.log(m);
+currentHour = m.hour();//this is in format
 
 // Create from ISO 8601 String
 m = moment("2019-05-19T23:10:00.000+05:00");
@@ -33,32 +35,35 @@ m = moment.utc("2019-05-19T23:10:00.000+05:00");
 
 m = moment();
 
-var timeIdArray = [m.format('16:00'), m.format('17:00'), m.format('18:00'), m.format('19:00'), m.format('20:00'), m.format('21:00'), m.format('22:00'), m.format('23:00'), m.format('24:00')];
+var timeIdArray = [m.format('15:00'),m.format('16:00'), m.format('17:00'), m.format('18:00'), m.format('19:00'), m.format('20:00'), m.format('21:00'), m.format('22:00'), m.format('23:00')];
 
 console.log(`toString() => ${m.toString()}`);
 console.log(`toISOString() => ${m.toISOString()}`);
 
-$('#mintes').text(1.3);
+// $('#minutes').text(1.3);
 
 function update() {
-  $('#minutes').html(moment().format('hh:mm:ss'));
+    $('#minutes').html(moment().format('HH:mm:ss'));
 }
 
 setInterval(update, 1000);
+
+interval = setInterval(setActiveColor, 1000);
 
 currentDayEl.textContent = m.format("dddd DD MMMM YYYY");
 
 //renderTime();
 displayScheduler();
 displayTimeEl();
+// setActiveColor();
 
 contentContainerEl.addEventListener("click", inputData);
 contentContainerEl.addEventListener("click", saveToLocal);
 
-displayReminders();
+ displayReminders();
 
 function displayScheduler() {
-    for (i = 0; i < timeIdArray.length; i++) {
+    for (var i = 0; i < timeIdArray.length; i++) {
         var rowEl = document.createElement('div')
         var timeIdEl = document.createElement('div');
         var inputTextEl = document.createElement('div');
@@ -75,13 +80,13 @@ function displayScheduler() {
         inputTextAreaEl.setAttribute("class", "inputTextArea col-md-12");
         inputTextAreaEl.setAttribute("type", "text");
         inputTextAreaEl.setAttribute("rows", "3");
-        inputTextAreaEl.setAttribute("onfocus", "value=''");
-        inputTextAreaEl.setAttribute("data-index", i);
+        // inputTextAreaEl.setAttribute("onfocus", "value=''");
+        inputTextAreaEl.setAttribute("data-index", i + 15);
         inputTextAreaEl.setAttribute("style", "resize: none");
         saveIconEl.setAttribute("class", "saveIcon col-md-2");
         saveIconEl.setAttribute("style", "background-color: #777777");
         saveIconBtnEl.setAttribute("class", "saveIconBtn btn");
-        saveIconBtnEl.setAttribute("data-index", i);
+        saveIconBtnEl.setAttribute("data-index", i + 15);
 
         timeIdEl.textContent = timeIdArray[i];
         inputTextAreaEl.textContent = "Enter text here...";
@@ -106,11 +111,10 @@ function displayScheduler() {
 
 }
 
-function displayTimeEl(){
+function displayTimeEl() {
     var timeIdEl = document.querySelectorAll(".timeId");
     var timeText = timeIdEl[0].textContent;
     console.log(timeText);
-    console.log(m.hour())
 }
 
 function inputData(event) {
@@ -120,6 +124,7 @@ function inputData(event) {
     // The stopPropagation() method stops the bubbling of an event to parent elements, preventing
     // any parent handlers from being notified of the event. You can use the method event.isPropagationStopped()
     // to know whether this method was ever called (on that event object).
+    event.stopPropagation(event);
     var userTextBoxSelect = event.target;
     var textBoxSelect = event.target.matches("textArea");
     if (textBoxSelect) {
@@ -134,28 +139,30 @@ function saveToLocal(event) {
     // The stopPropagation() method stops the bubbling of an event to parent elements, preventing
     // any parent handlers from being notified of the event. You can use the method event.isPropagationStopped()
     // to know whether this method was ever called (on that event object).
+    event.stopPropagation(event);
     var userTextInputEl = document.querySelectorAll(".inputTextArea")
     var userSaveSelect = event.target;
-    var saveSelect = event.target.matches("button");
+    var saveSelect = userSaveSelect.matches("button");
     var indexSelect = userSaveSelect.getAttribute("data-index");
     if (saveSelect) {
         console.log("this is what user clicked " + userSaveSelect.getAttribute("data-index"));
-        userInput = userTextInputEl[indexSelect].value.trim();
+        userInput = userTextInputEl[indexSelect - 15].value.trim();
         console.log(userInput);
         userInputUppercase = userInput.toUpperCase();
-        console.log("Current Initials are: " + userInputUppercase);
-        localStorage.setItem(indexSelect, userInputUppercase);
+        console.log("Current text input is: " + userInputUppercase);
+        localStorage.setItem(indexSelect - 15, userInputUppercase);
     }
+    displayReminders();
 }
 
-function displayReminders(){
+function displayReminders() {
     userTextInputEl = document.querySelectorAll(".inputTextArea")
-    for(k = 0; k < timeIdArray.length; k++){
-    userTextInputEl[k].textContent = localStorage.getItem(k);
+    for (var k = 0; k < timeIdArray.length; k++) {
+        userTextInputEl[k].value = localStorage.getItem(k);
     }
 }
 
-function clearList(event){
+function clearList(event) {
     // This 'preventDefault' method tells the user agent that if the event does not get explicitly
     // handled, its default action should not be taken as it normally would be.
     event.preventDefault(event);
@@ -163,13 +170,40 @@ function clearList(event){
     // any parent handlers from being notified of the event. You can use the method event.isPropagationStopped()
     // to know whether this method was ever called (on that event object).
     event.stopPropagation(event);
-    var userSaveSelect = event.target;
-    var clearSelect = event.target.matches("button");
+    var userClearSelect = event.target;
+    var clearSelect = userClearSelect.matches("button");
     if (clearSelect) {
         console.log("clear button clicked");
         $(".inputTextArea").empty();
         // localStorage.clear();
     }
+}
+
+function setActiveColor() {
+    // location.reload();
+    // console.log("Run");
+    $('#seconds').html(moment().format('HH'));
+    secondsDisplayEl.setAttribute('class', 'hide');
+    var currentHour = secondsDisplayEl.textContent;
+    // console.log(currentHour);
+    userTextInputEl = document.querySelectorAll(".inputTextArea")
+    for (var j = 0; j < timeIdArray.length; j++)
+        if (currentHour == j + 15) {
+            userTextInputEl[j].setAttribute("style", "background-color: #03fc21");
+            // userTextInputEl[j].setAttribute("style", "background-color: green");
+            // var dataInd = userTextInputEl[j].getAttribute("data-index");
+            // console.log(dataInd);
+        }
+        else if (currentHour < j + 15) {
+            userTextInputEl[j].setAttribute("style", "background-color: #ffffff");
+            // var dataInd = userTextInputEl[j].getAttribute("data-index");
+            // console.log(dataInd);
+        }
+        else {
+            userTextInputEl[j].setAttribute("style", "background-color: #fca203");
+            // var dataInd = userTextInputEl[j].getAttribute("data-index");
+            // console.log(dataInd);
+        }  
 }
 
 

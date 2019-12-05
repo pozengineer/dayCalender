@@ -62,4 +62,6 @@ This application was built using:
 -   jQuery: JavaScript library that enables HTML document traversal and manipulation, event handling, animation,
     and Ajax much simpler with an easy-to-use API
 
-![passwordGenerator tablet](assets/images/dayCalender01.jpg)
+![dayCalender tablet](assets/images/dayCalender01.jpg)
+![dayCalendertablet](assets/images/dayCalender02.jpg)
+![dayCalender iphoneX](assets/images/dayCalender03.jpg)

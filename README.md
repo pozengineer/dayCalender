@@ -62,7 +62,8 @@ The following files are used to create the application:
 - index.html
 - reset.css
 - style01.css
-- javaScript02.js
+- javaScript01.js
+- moment.min.js
 There are additional files that should be disregarded. They were used as the initial building
 blocks for the application but want to keep them for future reference.
 

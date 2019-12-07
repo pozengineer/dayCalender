@@ -2,6 +2,17 @@
 
 Summary
 
+The web application is a day calender that enables the user to set tasks during the course of a working day
+between 09:00 and 5:00. The user enters text in the designated time block and clicks the save button which
+sends the value into local storage. The user can edit the text input at any time but must click the save
+button if they want to keep the entry stored. As time passes each time block is rendered a different color
+depending on its state.
+- If the time block is in the past the element is rendered orange.
+- If the time block is currently the element is rendered green.
+- If the time block is in the future the element is rendered white.
+When the application rolls over to the next day, the data entries are deleted and the local storage
+cleared for the upcoming working day.
+
 The application uses 'addEventListener' so that when one of the buttons is clicked on, it will initiate
 the associated function. The use of 'preventDefault' and 'stopPropagation' methods are used to prevent
 the window from going to it's default settings when the function is run and prevents the clicked event
@@ -33,7 +44,8 @@ in an html file:
 - Create Elements
 - Set Attributes
 - AppendChild
-- Countdown timer
+- Moment.js
+- Interval
 
 Getting Started
 

@@ -212,6 +212,7 @@ hr {
     border: 1px solid hsl(var(--hue), 100%, 30%);
     border-radius: 5px;
     outline: none;
+    padding: 0;
 }
 
 .clearBtn {

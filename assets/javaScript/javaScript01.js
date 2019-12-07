@@ -35,7 +35,7 @@ $(document).ready(function() {
 
     m = moment();
 
-    var timeIdArray = [m.format('15:00'),m.format('16:00'), m.format('17:00'), m.format('18:00'), m.format('19:00'), m.format('20:00'), m.format('21:00'), m.format('22:00'), m.format('23:00')];
+    var timeIdArray = [m.format('09:00'),m.format('10:00'), m.format('11:00'), m.format('12:00'), m.format('13:00'), m.format('14:00'), m.format('15:00'), m.format('16:00'), m.format('17:00')];
 
     console.log(`toString() => ${m.toString()}`);
     console.log(`toISOString() => ${m.toISOString()}`);
@@ -81,16 +81,17 @@ $(document).ready(function() {
             inputTextAreaEl.setAttribute("type", "text");
             inputTextAreaEl.setAttribute("rows", "3");
             // inputTextAreaEl.setAttribute("onfocus", "value=''");
-            inputTextAreaEl.setAttribute("data-index", i + 15);
+            inputTextAreaEl.setAttribute("data-index", i + 9);
             inputTextAreaEl.setAttribute("style", "resize: none");
             saveIconEl.setAttribute("class", "saveIcon col-md-2");
             saveIconEl.setAttribute("style", "background-color: #777777");
-            saveIconBtnEl.setAttribute("class", "saveIconBtn btn");
-            saveIconBtnEl.setAttribute("data-index", i + 15);
+            saveIconBtnEl.setAttribute("class", "saveIconBtn btn fa fa-save");
+            saveIconBtnEl.setAttribute("data-index", i + 9);
+            saveIconBtnEl.setAttribute("style", "font-size: 20px")
 
             timeIdEl.textContent = timeIdArray[i];
-            inputTextAreaEl.textContent = "Enter text here...";
-            saveIconBtnEl.textContent = "Save";
+            inputTextAreaEl.textContent = "";
+            saveIconBtnEl.textContent = "";
 
             contentContainerEl.appendChild(rowEl);
             rowEl.appendChild(timeIdEl);
@@ -146,11 +147,11 @@ $(document).ready(function() {
         var indexSelect = userSaveSelect.getAttribute("data-index");
         if (saveSelect) {
             console.log("this is what user clicked " + userSaveSelect.getAttribute("data-index"));
-            userInput = userTextInputEl[indexSelect - 15].value.trim();
+            userInput = userTextInputEl[indexSelect - 9].value.trim();
             console.log(userInput);
             userInputUppercase = userInput.toUpperCase();
             console.log("Current text input is: " + userInputUppercase);
-            localStorage.setItem(indexSelect - 15, userInputUppercase);
+            localStorage.setItem(indexSelect - 9, userInputUppercase);
         }
         displayReminders();
     }
@@ -174,8 +175,9 @@ $(document).ready(function() {
         var clearSelect = userClearSelect.matches("button");
         if (clearSelect) {
             console.log("clear button clicked");
-            $('.inputTextarea').empty();
-            // localStorage.clear();
+            $('.inputTextArea').val('');
+            // $('.inputTextArea').empty();
+            localStorage.clear();
         }
     }
 
@@ -188,17 +190,30 @@ $(document).ready(function() {
         // console.log(currentHour);
         userTextInputEl = document.querySelectorAll(".inputTextArea")
         for (var j = 0; j < timeIdArray.length; j++)
-            if (currentHour == j + 15) {
+            // When current hour is equal to the timeBlock value, set background color
+            // to green representing active
+            if (currentHour == j + 9) {
                 userTextInputEl[j].setAttribute("style", "background-color: #03fc21");
-                // userTextInputEl[j].setAttribute("style", "background-color: green");
                 // var dataInd = userTextInputEl[j].getAttribute("data-index");
                 // console.log(dataInd);
             }
-            else if (currentHour < j + 15) {
+            // When current hour is less than the timeBlock value, set background color
+            // to white. This indicates events still to come in the future
+            else if (currentHour < j + 9) {
+                // 
                 userTextInputEl[j].setAttribute("style", "background-color: #ffffff");
                 // var dataInd = userTextInputEl[j].getAttribute("data-index");
                 // console.log(dataInd);
             }
+            // When current hour is less than the time indicated, clear the values in the
+            // 'inputTextArea' elements and clear the local storage for a new working day
+            else if (currentHour < 9) {
+                $('.inputTextArea').val('');
+                localStorage.clear();
+            }
+            // If the above conditions have not been met, which means that the current hour
+            // is greater than the timeBlock value, set background color to orange indicating
+            // events in the past  
             else {
                 userTextInputEl[j].setAttribute("style", "background-color: #fca203");
                 // var dataInd = userTextInputEl[j].getAttribute("data-index");
